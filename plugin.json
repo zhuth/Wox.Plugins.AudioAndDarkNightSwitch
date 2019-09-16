@@ -1,6 +1,6 @@
 {
   "ID": "54a7ec252a6f315362663fdd7e716188",
-  "ActionKeywords": [ "DarkNight", "LightDay", "Sound" ],
+  "ActionKeywords": [ "DarkNight", "DarkNightTemp", "LightDay", "Sound" ],
   "Name": "DarkNightAndAudioSwitch",
   "Description": "DarkNightAndAudioSwitch",
   "Author": "zhuth",

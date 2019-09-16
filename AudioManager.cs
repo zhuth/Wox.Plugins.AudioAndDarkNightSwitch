@@ -6,13 +6,7 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
 {
     public static class AudioManager
     {
-        private const string AUDIO_IMMDEVICE_IID = "D666063F-1587-4E43-81F1-B948E807363F";
-        private const string AUDIO_IMMDEVICE_ENUMERATOR_IID = "A95664D2-9614-4F35-A746-DE8DB63617E6";
-        private const string AUDIO_IMMDEVICE_ENUMERATOR_OBJECT_IID = "BCDE0395-E52F-467C-8E3D-C4579291692E";
-
-        private const string POLICY_CONFIG_VISTA_IID = "568B9108-44BF-40B4-9006-86AFE5B5A620";
         private const string POLICY_CONFIG_IID = "F8679F50-850A-41CF-9C72-430F290290C8";
-        private const string POLICY_CONFIG_X_IID = "8F9FB2AA-1C0B-4D54-B6BB-B2F2A10CE03C";
         private const string POLICY_CONFIG_CLIENT_IID = "870AF99C-171D-4F9E-AF0D-E63DF40C2BC9";
 
 
@@ -107,18 +101,18 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
         [Flags]
         public enum ERole : uint
         {
-            eConsole = 0,
-            eMultimedia = (eConsole + 1),
-            eCommunications = (eMultimedia + 1),
-            ERole_enum_count = (eCommunications + 1)
+            Console = 0,
+            Multimedia = (Console + 1),
+            Communications = (Multimedia + 1),
+            All = (Communications + 1)
         }
 
         public static bool SwitchToPlaybackDevice(string devId)
         {
-            IPolicyConfig config = new _PolicyConfigClient() as IPolicyConfig;
-            config.SetDefaultEndpoint(devId, ERole.eConsole);
-            config.SetDefaultEndpoint(devId, ERole.eMultimedia);
-            config.SetDefaultEndpoint(devId, ERole.eCommunications);
+            var config = new _PolicyConfigClient() as IPolicyConfig;
+            config.SetDefaultEndpoint(devId, ERole.Console);
+            config.SetDefaultEndpoint(devId, ERole.Multimedia);
+            config.SetDefaultEndpoint(devId, ERole.Communications);
             return true;
         }
     }

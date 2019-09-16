@@ -31,10 +31,8 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
         static ScreenTint()
         {
             hDC = GetDC(IntPtr.Zero);
-            var rgb = GetRGBForTemperature(4500);
-            Console.WriteLine("{0} {1} {2}", rgb[0], rgb[1], rgb[2]);
-            nightmode = getGampArray(rgb);
             normal = getGampArray(new byte[] { 255, 255, 255 });
+            SetTintTemperature();
         }
 
         public static byte[] GetRGBForTemperature(int temperature)
@@ -69,35 +67,55 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
             };
         }
 
+        public static void SetTintTemperature(int value = 0)
+        {
+            if (value > 0)
+            {
+                Properties.Settings.Default.TintTemperature = value;
+                Properties.Settings.Default.Save();
+            }
+            var rgb = GetRGBForTemperature(Properties.Settings.Default.TintTemperature);
+            nightmode = getGampArray(rgb);
+            if (Properties.Settings.Default.Mode == "Dark")
+            {
+                Tint();
+            }
+        }
+
+        internal static void AutoMode()
+        {
+            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", true);
+            int lightMode = (int)registryKey.GetValue("SystemUsesLightTheme");
+            if (lightMode == 0) Tint();
+            else Restore();
+        }
+
         public static void Tint()
         {
+            if (Properties.Settings.Default.Mode != "Dark")
+            {
+                Properties.Settings.Default.Mode = "Dark";
+                Properties.Settings.Default.Save();
+            }
             SetDeviceGammaRamp(hDC, nightmode);
+
+            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", true);
+            registryKey.SetValue("SystemUsesLightTheme", 0, RegistryValueKind.DWord);
+            registryKey.SetValue("AppsUseLightTheme", 0, RegistryValueKind.DWord);
         }
 
         public static void Restore()
         {
+            if (Properties.Settings.Default.Mode == "Dark")
+            {
+                Properties.Settings.Default.Mode = "Light";
+                Properties.Settings.Default.Save();
+            }
             SetDeviceGammaRamp(hDC, normal);
-        }
 
-        public static void AppTheme(bool dark)
-        {
-            GetKey().SetValue("AppsUseLightTheme", dark ? 0 : 1, RegistryValueKind.DWord);
-        }
-
-        public static void SystemTheme(bool dark)
-        {
-            GetKey().SetValue("SystemUsesLightTheme", dark ? 0 : 1, RegistryValueKind.DWord);
-        }
-
-        public static void ColorPrevalence(int theme)
-        {
-            GetKey().SetValue("ColorPrevalence", theme, RegistryValueKind.DWord);
-        }
-
-        private static RegistryKey GetKey()
-        {
             RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", true);
-            return registryKey;
+            registryKey.SetValue("SystemUsesLightTheme", 1, RegistryValueKind.DWord);
+            registryKey.SetValue("AppsUseLightTheme", 1, RegistryValueKind.DWord);
         }
 
     }

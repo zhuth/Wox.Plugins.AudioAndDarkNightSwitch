@@ -26,6 +26,22 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
                         Title = query.ActionKeyword
                     });
                     break;
+                case "DarkNightTemp":
+                    int tmp;
+                    if (int.TryParse(query.Search, out tmp))
+                    {
+                        results.Add(new Result
+                        {
+                            Action = new Func<ActionContext, bool>((a) =>
+                            {
+                                ScreenTint.SetTintTemperature(tmp);
+
+                                return true;
+                            }),
+                            Title = query.ActionKeyword
+                        });
+                    }
+                    break;
                 case "Sound":
                     foreach (var dev in AudioManager.GetPlayBackDevices())
                     {
@@ -45,25 +61,17 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
         public bool DarkNight()
         {
             ScreenTint.Tint();
-            ScreenTint.AppTheme(true);
-            ScreenTint.SystemTheme(true);
             return true;
         }
         public bool LightDay()
         {
             ScreenTint.Restore();
-            ScreenTint.AppTheme(false);
-            ScreenTint.SystemTheme(false);
             return true;
         }
 
         public void Init(PluginInitContext context)
         {
-            context.CurrentPluginMetadata.ActionKeywords = new List<string>(new string[]       {
-                "DarkNight",
-                "LightDay",
-                "Sound"
-            });
+            ScreenTint.AutoMode();
         }
 
     }
