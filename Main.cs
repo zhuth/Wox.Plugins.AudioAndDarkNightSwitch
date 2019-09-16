@@ -15,15 +15,24 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
             {
                 case "DarkNight":
                 case "LightDay":
-                    if (query.ActionKeyword == "DarkNight") DarkNight();
-                    else LightDay();
+                    results.Add(new Result
+                    {
+                        Action = new Func<ActionContext, bool>((a) =>
+                        {
+                            if (query.ActionKeyword == "DarkNight") DarkNight();
+                            else LightDay();
+                            return true;
+                        }),
+                        Title = query.ActionKeyword
+                    });
                     break;
                 case "Sound":
                     foreach (var dev in AudioManager.GetPlayBackDevices())
                     {
+                        string devId = dev.ID;
                         results.Add(new Result
                         {
-                            Action = new Func<ActionContext, bool>((a) => AudioManager.SwitchToPlaybackDevice(dev)),
+                            Action = new Func<ActionContext, bool>((a) => AudioManager.SwitchToPlaybackDevice(devId)),
                             Title = dev.FriendlyName
                         });
                     }
@@ -68,7 +77,7 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
             {
                 Console.WriteLine($"{dev.FriendlyName} {dev.ID}");
             }
-            AudioManager.SwitchToPlaybackDevice(devs[2]);
+            AudioManager.SwitchToPlaybackDevice(devs[2].ID);
             Console.ReadLine();
         }
     }

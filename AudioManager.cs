@@ -91,7 +91,6 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
         private class _PolicyConfigClient
         {
         }
-        private static IPolicyConfig config = new _PolicyConfigClient() as IPolicyConfig;
 
         public static MMDevice[] GetPlayBackDevices()
         {
@@ -114,11 +113,12 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
             ERole_enum_count = (eCommunications + 1)
         }
 
-        public static bool SwitchToPlaybackDevice(MMDevice dev)
+        public static bool SwitchToPlaybackDevice(string devId)
         {
-            config.SetDefaultEndpoint(dev.ID, ERole.eConsole);
-            config.SetDefaultEndpoint(dev.ID, ERole.eMultimedia);
-            config.SetDefaultEndpoint(dev.ID, ERole.eCommunications);
+            IPolicyConfig config = new _PolicyConfigClient() as IPolicyConfig;
+            config.SetDefaultEndpoint(devId, ERole.eConsole);
+            config.SetDefaultEndpoint(devId, ERole.eMultimedia);
+            config.SetDefaultEndpoint(devId, ERole.eCommunications);
             return true;
         }
     }
