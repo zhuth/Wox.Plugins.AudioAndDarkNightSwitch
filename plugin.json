@@ -1,0 +1,12 @@
+{
+  "ID": "54a7ec252a6f315362663fdd7e716188",
+  "ActionKeywords": [ "DarkNight", "LightDay", "Sound" ],
+  "Name": "DarkNightAndAudioSwitch",
+  "Description": "DarkNightAndAudioSwitch",
+  "Author": "zhuth",
+  "Version": "1.1.0",
+  "Language": "csharp",
+  "Website": "http://www.getwox.com/plugin",
+  "ExecuteFileName": "Wox.Plugins.AudioAndDarkNightSwitch.dll",
+  "IcoPath": "Images\\icon.png"
+}
