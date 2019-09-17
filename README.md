@@ -2,7 +2,7 @@
 
 A Wox plugin for switch among playback devices and between dark and light mode.
 
-## Requisitions
+## Prerequisites
 
 NAudio
 
