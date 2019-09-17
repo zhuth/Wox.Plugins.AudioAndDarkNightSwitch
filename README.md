@@ -11,7 +11,7 @@ NAudio
 Some codes are adapted from:
 
 - [SoundSwitch](https://github.com/Belphemur/SoundSwitch)
-- [Windows-Auto-Night-Mode](https://github.com/Armin2208/)
+- [Windows-Auto-Night-Mode](https://github.com/Armin2208/Windows-Auto-Night-Mode)
 
 ## License
 
