@@ -85,7 +85,7 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
         internal static void AutoMode()
         {
             RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", true);
-            int lightMode = (int)registryKey.GetValue("SystemUsesLightTheme");
+            int lightMode = (int)registryKey.GetValue("AppsUseLightTheme");
             if (lightMode == 0) Tint();
             else Restore();
         }
@@ -114,7 +114,7 @@ namespace Wox.Plugins.AudioAndDarkNightSwitch
             SetDeviceGammaRamp(hDC, normal);
 
             RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", true);
-            registryKey.SetValue("SystemUsesLightTheme", 1, RegistryValueKind.DWord);
+            // registryKey.SetValue("SystemUsesLightTheme", 1, RegistryValueKind.DWord);
             registryKey.SetValue("AppsUseLightTheme", 1, RegistryValueKind.DWord);
         }
 

@@ -6,7 +6,7 @@
   "Author": "zhuth",
   "Version": "1.1.0",
   "Language": "csharp",
-  "Website": "http://www.getwox.com/plugin",
+  "Website": "https://github.com/zhuth/Wox.Plugins.AudioAndDarkNightSwitch",
   "ExecuteFileName": "Wox.Plugins.AudioAndDarkNightSwitch.dll",
   "IcoPath": "Images\\icon.png"
 }
